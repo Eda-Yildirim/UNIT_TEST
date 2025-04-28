@@ -93,4 +93,23 @@ describe('Validation Tests', () => {
       expect(validatePassword('StrongPassword123!@#')).toBe('');
     });
   });
+  describe('Confirm Password Validation', () => {
+    it('should return error for empty confirm password', () => {
+      expect(validateConfirmPassword('Password1!', '')).toBe('Confirm password is required');
+    });
+
+    it('should return error for confirm password mismatch', () => {
+      expect(validateConfirmPassword('Password1!', 'Password2!')).toBe('Passwords do not match');
+    });
+
+    it('should pass when passwords match exactly', () => {
+      expect(validateConfirmPassword('Password1!', 'Password1!')).toBe('');
+    });
+
+    it('should fail if confirm password matches but with extra spaces', () => {
+      expect(validateConfirmPassword('Password1!', ' Password1! ')).toBe('Passwords do not match');
+    });
+  });
+
+  
 });
