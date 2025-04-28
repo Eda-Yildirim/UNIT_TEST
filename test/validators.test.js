@@ -35,4 +35,29 @@ describe('Validation Tests', () => {
       expect(validateName('Mary Jane')).toBe('');
     });
   });
+  describe('Email Validation', () => {
+    it('should return error for empty email', () => {
+      expect(validateEmail('')).toBe('Email is required');
+    });
+
+    it('should return error for invalid email without domain', () => {
+      expect(validateEmail('test@')).toBe('Invalid email format');
+    });
+
+    it('should return error for invalid email missing @', () => {
+      expect(validateEmail('testexample.com')).toBe('Invalid email format');
+    });
+
+    it('should return error for email with spaces', () => {
+      expect(validateEmail(' test@example.com ')).toBe('Invalid email format');
+    });
+
+    it('should pass for valid email with subdomain', () => {
+      expect(validateEmail('user@mail.example.com')).toBe('');
+    });
+
+    it('should pass for valid email with plus sign', () => {
+      expect(validateEmail('user+label@example.com')).toBe('');
+    });
+  });
 });
