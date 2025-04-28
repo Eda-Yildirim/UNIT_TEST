@@ -60,4 +60,37 @@ describe('Validation Tests', () => {
       expect(validateEmail('user+label@example.com')).toBe('');
     });
   });
+  describe('Password Validation', () => {
+    it('should return error for empty password', () => {
+      expect(validatePassword('')).toBe('Password is required');
+    });
+
+    it('should return error for password without uppercase letter', () => {
+      expect(validatePassword('password1!')).toBe('Password must contain an uppercase letter');
+    });
+
+    it('should return error for password without lowercase letter', () => {
+      expect(validatePassword('PASSWORD1!')).toBe('Password must contain a lowercase letter');
+    });
+
+    it('should return error for password without a number', () => {
+      expect(validatePassword('Password!')).toBe('Password must contain a number');
+    });
+
+    it('should return error for password without a special character', () => {
+      expect(validatePassword('Password1')).toBe('Password must contain a special character');
+    });
+
+    it('should return error for short password', () => {
+      expect(validatePassword('Pa1!')).toBe('Password must be at least 8 characters');
+    });
+
+    it('should pass for strong password with symbols', () => {
+      expect(validatePassword('P@ssw0rd!')).toBe('');
+    });
+
+    it('should pass for long password', () => {
+      expect(validatePassword('StrongPassword123!@#')).toBe('');
+    });
+  });
 });
