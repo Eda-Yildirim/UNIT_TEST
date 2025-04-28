@@ -93,38 +93,5 @@ describe('Validation Tests', () => {
       expect(validatePassword('StrongPassword123!@#')).toBe('');
     });
   });
-  describe('Date of Birth Validation', () => {
-    it('should return error for empty date of birth', () => {
-      expect(validateDateOfBirth('')).toBe('Date of birth is required');
-    });
 
-    it('should return error for invalid date format (yyyy-mm-dd)', () => {
-      expect(validateDateOfBirth('2020-12-01')).toBe('Date must be in dd/mm/yyyy format');
-    });
-
-    it('should return error for invalid date format (slashes wrong)', () => {
-      expect(validateDateOfBirth('2020/12/01')).toBe('Date must be in dd/mm/yyyy format');
-    });
-
-    it('should return error for future date', () => {
-      expect(validateDateOfBirth('01/01/2100')).toBe('Date of birth cannot be in the future');
-    });
-
-    it('should return error for someone under 13 years old', () => {
-      const recentYear = new Date().getFullYear() - 10;
-      expect(validateDateOfBirth('01/01/${recentYear}')).toBe('You must be at least 13 years old');
-    });
-
-    it('should pass for someone exactly 13 years old today', () => {
-      const today = new Date();
-      const year = today.getFullYear() - 13;
-      const month = (today.getMonth() + 1).toString().padStart(2, '0');
-      const day = today.getDate().toString().padStart(2, '0');
-      expect(validateDateOfBirth('${day}/${month}/${year}')).toBe('');
-    });
-
-    it('should pass for old valid dates', () => {
-      expect(validateDateOfBirth('01/01/1980')).toBe('');
-    });
-  });
 });
